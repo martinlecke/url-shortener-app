@@ -3,30 +3,55 @@ import './App.css';
 
 class App extends Component {
   state = {
-    inputUrl: ''
-  };
-  componentDidMount() {
-    this.apiTest();
-  }
-  apiTest = async () => {
-    const response = await fetch('/test');
-    const body = await response.json();
-
-    console.log(body);
+    inputUrl: '',
+    customUrlInput: '',
+    newUrlMade: '',
+    error: ''
   };
 
-  handleInputUrl = (e) => {
-    this.setState({ inputUrl: e.target.value})
+  handleInputUrl = e => {
+    this.setState({ inputUrl: e.target.value });
   };
 
-  handleSubmitShorten = (e) => {
+  handleSubmitShorten = e => {
     e.preventDefault();
-    console.log('submitted')
-    this.setState({ inputUrl: '' })
-  }
+    if (this.state.inputUrl.length < 3) {
+      return;
+    }
+    this.setState({ inputUrl: '' });
+    this.postShortenUrl();
+  };
+
+  postShortenUrl = async () => {
+    const data = {
+      urlToShorten: this.state.inputUrl.includes('http') ? this.state.inputUrl : `http://${this.state.inputUrl}`,
+      customUrl: this.state.customUrlInput
+    };
+
+    const validUrlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm;
+    if (data.urlToShorten.match(validUrlRegex)) {
+      fetch('/api/shorten-url', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json())
+        .then(response => {
+          console.log(response)
+          this.setState({ newUrlMade: response });
+        })
+        .catch(e => {
+          this.setState({error: 'Could not shorten your URL.'})
+        });
+    } else {
+      this.setState({ error: 'Not valid URL.' });
+    }
+  };
 
   render() {
-    const { inputUrl } = this.state;
+    const { inputUrl, newUrlMade, error } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -37,10 +62,16 @@ class App extends Component {
               value={inputUrl}
               onChange={this.handleInputUrl}
             />
-            <button>
-              Shorten
-            </button>
+            <button>Shorten</button>
           </form>
+          {newUrlMade && (
+            <p>
+              <a href={`${newUrlMade.shortenUrl}`}>
+                {`${newUrlMade.shortenUrl}`}
+              </a>
+            </p>
+          )}
+          {error && <p>{error}</p>}
         </header>
       </div>
     );
