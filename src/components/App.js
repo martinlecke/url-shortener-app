@@ -6,8 +6,25 @@ class App extends Component {
     inputUrl: '',
     customUrlInput: '',
     newUrlMade: '',
-    error: ''
+    error: '',
+    ownerUrls: []
   };
+
+  componentDidMount() {
+    fetch('/api/urls', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          ownerUrls: data
+        });
+      });
+  }
 
   handleInputUrl = e => {
     this.setState({ inputUrl: e.target.value });
@@ -24,7 +41,9 @@ class App extends Component {
 
   postShortenUrl = async () => {
     const data = {
-      urlToShorten: this.state.inputUrl.includes('http') ? this.state.inputUrl : `http://${this.state.inputUrl}`,
+      urlToShorten: this.state.inputUrl.includes('http')
+        ? this.state.inputUrl
+        : `http://${this.state.inputUrl}`,
       customUrl: this.state.customUrlInput
     };
 
@@ -35,15 +54,16 @@ class App extends Component {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(data)
       })
         .then(res => res.json())
         .then(response => {
-          console.log(response)
+          console.log(response);
           this.setState({ newUrlMade: response });
         })
         .catch(e => {
-          this.setState({error: 'Could not shorten your URL.'})
+          this.setState({ error: 'Could not shorten your URL.' });
         });
     } else {
       this.setState({ error: 'Not valid URL.' });
@@ -51,7 +71,7 @@ class App extends Component {
   };
 
   render() {
-    const { inputUrl, newUrlMade, error } = this.state;
+    const { inputUrl, newUrlMade, error, ownerUrls } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -72,6 +92,12 @@ class App extends Component {
             </p>
           )}
           {error && <p>{error}</p>}
+          {ownerUrls &&
+            ownerUrls.map(link => (
+              <p>
+                <a href={link.url}>{link.url}</a> - {link.visited}
+              </p>
+            ))}
         </header>
       </div>
     );
