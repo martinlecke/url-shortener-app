@@ -4,7 +4,7 @@ import { OwnerUrls } from './OwnerUrls/OwnerUrls';
 
 const App = () =>  {
   const [error, setError] = useState('');
-  const [newUrlMade, setNewUrlMade] = useState([]);
+  const [newUrlMade, setNewUrlMade] = useState('');
 
   return (
       <div className="App">

@@ -55,6 +55,7 @@ export const ShortenUrlForm = props => {
         type="text"
         value={inputUrl}
         onChange={handleInputUrl}
+        placeholder="Paste a link to shorten it"
       />
       <button>Shorten</button>
     </form>
