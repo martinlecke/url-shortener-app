@@ -18,12 +18,14 @@ router.post('/shorten-url', async (req, res) => {
 router.get('/urls', async (req, res) => {
   const urlsInDB = await UrlShort.find({
     sessionOwner: req.sessionID
-  });
-  const x = urlsInDB.map(url => ({
-    url: `${baseUrl}${url.shorten}`,
-    visited: url.visited
-  }));
-  res.json(x);
+  })
+    .limit(10)
+    .sort({createdAt: -1});
+  res.json(urlsInDB.map(url => ({
+    shortenUrl: `${baseUrl}${url.shorten}`,
+    visited: url.visited,
+    url: url.url
+  })));
 });
 
 module.exports = router;

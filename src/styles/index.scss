@@ -1,0 +1,23 @@
+@import './variables';
+
+body {
+  background: $primaryBgColor;
+  color: $secondaryColor;
+}
+
+a {
+  color: $primaryLinkColor;
+  &:visited {
+    color: $secondaryLinkColor;
+  }
+}
+
+button {
+  cursor: pointer;
+  background: $primaryButtonBgColor;
+  transition: all 1s;
+  color: $primaryButtonColor;
+  &:hover {
+    background: lighten($primaryButtonBgColor, 10%)
+  }
+}
