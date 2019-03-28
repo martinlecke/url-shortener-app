@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import API from '../../utils/Api';
 
-export const ShortenUrlForm = props => {
+export const ShortenUrlForm = ({ setNewUrlMade, setError }) => {
   const [inputUrl, setInputUrl] = useState('');
-  const [customInputUrl] = useState('');
+  const [customInputUrl, setCustomInputUrl] = useState('');
 
   const handleInputUrl= (e) => {
     const text = e.target.value.replace(/ /g, '');
@@ -10,43 +11,19 @@ export const ShortenUrlForm = props => {
      setInputUrl(text);
   }
 
-  const postShortenUrl = async () => {
-    const validUrlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm;
-
-    if (inputUrl.match(validUrlRegex)) {
-      const data = {
-        urlToShorten: inputUrl.includes('http')
-          ? inputUrl
-          : `http://${inputUrl}`,
-        customUrl: customInputUrl
-      };
-      fetch('/api/shorten-url', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify(data)
-      })
-        .then(res => res.json())
-        .then(response => {
-          props.setNewUrlMade(response);
-        })
-        .catch(e => {
-          props.setError('Could not shorten your URL.');
-        });
-    } else {
-      props.setError('Not valid URL.');
-    }
-  };
-
-  const handleFormSubmit = e => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (inputUrl.length < 3) {
-      return;
-    }
-    setInputUrl('');
-    postShortenUrl();
+    if (inputUrl.length < 3) return;
+    
+    const validUrlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm;
+    if (validUrlRegex.test(inputUrl)) {
+      try {
+        const postUrl = await API.postShortenUrl(inputUrl, customInputUrl);
+        setInputUrl('');
+        setNewUrlMade(postUrl);
+      } catch(e) {setError('Could not shorten your URL.')}
+
+    } else { setError('Your URL is unvalid.'); }
   };
 
   return (

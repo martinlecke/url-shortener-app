@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import API from '../../utils/Api';
 
-export const OwnerUrls = () => {
+const OwnerUrls = () => {
   const [ownerUrls, setOwnerUrls] = useState([]);
 
   useEffect(() => {
-    fetch('/api/urls', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    })
-      .then(res => res.json())
-      .then(ownerUrls => setOwnerUrls(ownerUrls));
+    (async () => setOwnerUrls(await API.fetchOwnerUrls()) )();
   }, []);
 
   return (
@@ -20,9 +13,11 @@ export const OwnerUrls = () => {
       {ownerUrls.map(link => (
         <p key={link.shortenUrl}>
           <a href={link.shortenUrl}>{link.shortenUrl}</a> -
-                <a href={link.url}>{link.url}</a> - {link.visited}
+          <a href={link.url}>{link.url}</a> - {link.visited}
         </p>
       ))}
     </div>
   );
 };
+
+export { OwnerUrls as default };
