@@ -20,12 +20,14 @@ router.get('/urls', async (req, res) => {
     sessionOwner: req.sessionID
   })
     .limit(10)
-    .sort({createdAt: -1});
-  res.json(urlsInDB.map(url => ({
-    shortenUrl: `${baseUrl}${url.shorten}`,
-    visited: url.visited,
-    url: url.url
-  })));
+    .sort({ createdAt: -1 });
+  res.json(
+    urlsInDB.map(url => ({
+      shortenUrl: `${baseUrl}${url.shorten}`,
+      visited: url.visited,
+      url: url.url
+    }))
+  );
 });
 
 module.exports = router;

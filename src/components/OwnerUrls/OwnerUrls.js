@@ -5,7 +5,7 @@ const OwnerUrls = () => {
   const [ownerUrls, setOwnerUrls] = useState([]);
 
   useEffect(() => {
-    (async () => setOwnerUrls(await API.fetchOwnerUrls()) )();
+    (async () => setOwnerUrls(await API.fetchOwnerUrls()))();
   }, []);
 
   return (

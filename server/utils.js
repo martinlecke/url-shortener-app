@@ -3,7 +3,6 @@ const UrlShort = require('./models/urlShort');
 const uniqUrl = async () => {
   const chars =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
   let uniq = '';
 
   while (uniq.length < 6) {

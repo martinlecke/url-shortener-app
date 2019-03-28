@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const urlShortSchema = new mongoose.Schema({
   shorten: {
@@ -23,4 +23,4 @@ const urlShortSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("UrlShort", urlShortSchema);
+module.exports = mongoose.model('UrlShort', urlShortSchema);

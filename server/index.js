@@ -6,7 +6,7 @@ const appRoutes = require('./routes/App.routes');
 
 const app = express();
 
-app.use(middleware)
+app.use(middleware);
 app.use('/api', apiRoutes);
 app.use('/', appRoutes);
 
