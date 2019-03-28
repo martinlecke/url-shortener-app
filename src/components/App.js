@@ -10,7 +10,7 @@ const App = () => {
     setTimeout(() => {
       setError('');
     }, 5000);
-  }, [error])
+  }, [error]);
 
   return (
     <div>

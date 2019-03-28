@@ -13,7 +13,8 @@ class API {
   static fetchOwnerUrls() {
     return fetch('/api/urls', init('GET'))
       .then(res => res.json())
-      .then(ownerUrls => ownerUrls);
+      .then(ownerUrls => ownerUrls)
+      .catch(() => [])
   }
 
   static postShortenUrl = (inputUrl, customInputUrl) => {
