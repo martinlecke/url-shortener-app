@@ -10,7 +10,7 @@ const OwnerUrls = () => {
     (async () => setOwnerUrls(await API.fetchOwnerUrls()))();
   }, []);
   return (
-    <div className="owner-urls">
+    ownerUrls.length && <div className="owner-urls">
       <h2>Your shorties</h2>
       <ul>
         {ownerUrls.map(link => (

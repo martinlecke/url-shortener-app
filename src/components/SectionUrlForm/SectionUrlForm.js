@@ -4,6 +4,7 @@ import { removeHttpString } from '../../utils/utils';
 import Icon from '../_common/Icon';
 import Alert from './Alert/Alert';
 import './SectionUrlForm.scss';
+import CopyClipboard from '../_common/CopyClipboard';
 
 const SectionUrlForm = () => {
   const [newUrlMade, setNewUrlMade] = useState('');
@@ -14,8 +15,8 @@ const SectionUrlForm = () => {
       setError('');
     }, 5000);
   }, [error]);
+
   return (
-    
     <>
       <div className="section-url-form-start">
         <h1>
@@ -24,6 +25,7 @@ const SectionUrlForm = () => {
         </h1>
         <ShortenUrlForm setError={setError} setNewUrlMade={setNewUrlMade} />
       </div>
+
       <div className="section-url-form-end">
         {newUrlMade && (
           <Alert type="success">
@@ -31,6 +33,7 @@ const SectionUrlForm = () => {
             <a href={newUrlMade.shortenUrl} title="Link to your shortened url">
               {removeHttpString(newUrlMade.shortenUrl)}
             </a>
+            <CopyClipboard copy={newUrlMade.shortenUrl} />
           </Alert>
         )}
         {error && <Alert type="error">{error}</Alert>}
