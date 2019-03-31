@@ -17,14 +17,13 @@ class API {
       .catch(() => [])
   }
 
-  static postShortenUrl = (inputUrl, customInputUrl) => {
+  static postShortenUrl = (inputUrl) => {
     const data = {
-      urlToShorten: inputUrl.includes('http') ? inputUrl : `http://${inputUrl}`,
-      customUrl: customInputUrl
+      urlToShorten: inputUrl.includes('http') ? inputUrl : `http://${inputUrl}`
     };
     return fetch('/api/shorten-url', init('POST', data))
       .then(res => res.json())
-      .then(response => response);
+      .then(response => response)
   };
 }
 

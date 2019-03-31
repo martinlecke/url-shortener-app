@@ -1,0 +1,27 @@
+@import '../styles/variables';
+
+* {
+  outline: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: $primaryBgColor;
+  font-family: "Montserrat", sans-serif;
+}
+
+button {
+  cursor: pointer;
+  background: $primaryButtonBgColor;
+  transition: all 1s;
+  color: $primaryButtonColor;
+  border: 0;
+
+  &:hover {
+    background: lighten($primaryButtonBgColor, 15%)
+  }
+}
+
+input {
+  border: 0;
+}

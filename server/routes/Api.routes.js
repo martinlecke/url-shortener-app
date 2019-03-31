@@ -8,7 +8,6 @@ router.post('/shorten-url', async (req, res) => {
   const urlShort = await new UrlShort({
     shorten: uniq,
     url: req.body.urlToShorten,
-    customUrl: req.body.customUrl,
     sessionOwner: req.sessionID
   });
   await urlShort.save();

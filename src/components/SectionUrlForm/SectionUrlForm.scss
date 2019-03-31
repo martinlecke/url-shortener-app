@@ -1,0 +1,102 @@
+@import '../../styles/variables';
+
+.section-url-form-start {
+  align-items: center;
+  color: $secondaryColor;
+  display: flex;
+  flex-direction: column;
+  min-height: 30vh;
+  justify-content: flex-end;
+
+  h1 {
+    font-size: 3em;
+    color: white;
+    margin: 0 0 1em 0;
+    font-family: "Patua One";
+    letter-spacing: -2px;
+
+    svg {
+      fill: white;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  form {
+    width: 100%;
+    max-width: 880px;
+
+    div {
+      display: flex;
+
+      input {
+        border-radius: $borderRadius 0 0 $borderRadius;
+        font-size: 1.3em;
+        flex-grow: 1;
+        padding: 1em;
+      }
+
+      button {
+        padding: 1em;
+        font-size: 1.3em;
+        border-radius: 0 $borderRadius $borderRadius 0;
+      }
+    }
+
+  }
+}
+
+.section-url-form-end {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 10vh;
+
+  div {
+    display: block;
+    border-radius: $borderRadius;
+    padding: 1em 2em;
+    margin: 1em;
+
+    &.success {
+      background: #eed463;
+
+      a {
+        $color: #94823a;
+        color: $color;
+
+        &:hover {
+          color: darken($color, 20%)
+        }
+      }
+      button {
+        $color: #94823a;
+        padding: 5px 10px;
+        margin-left: 1em;
+        background: $color;
+        color: white;
+        border-radius: $borderRadius;
+        &:hover {
+          background: lighten($color, 10%);
+        }
+        svg {
+          fill: white;
+        }
+      }
+    }
+
+    &.error {
+      background: #f28483;
+
+      a {
+        $color: #c05a58;
+        color: $color;
+
+        &:hover {
+          color: darken($color, 20%)
+        }
+      }
+    }
+  }
+}

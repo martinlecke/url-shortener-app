@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import API from '../../utils/Api';
-import isUrlValid from '../../utils/utils';
+import API from '../../../utils/Api';
+import { isUrlValid } from '../../../utils/utils';
 
-export const ShortenUrlForm = ({ setNewUrlMade, setError }) => {
+const ShortenUrlForm = ({ setNewUrlMade, setError }) => {
   const [inputUrl, setInputUrl] = useState('');
-  const [customInputUrl, setCustomInputUrl] = useState('');
 
   const handleInputUrl = e => {
     const text = e.target.value.replace(/ /g, '');
@@ -18,8 +17,9 @@ export const ShortenUrlForm = ({ setNewUrlMade, setError }) => {
 
     if (isUrlValid(inputUrl)) {
       try {
-        const postUrl = await API.postShortenUrl(inputUrl, customInputUrl);
+        const postUrl = await API.postShortenUrl(inputUrl);
         setInputUrl('');
+        setError('');
         setNewUrlMade(postUrl);
       } catch (e) {
         setError('Could not shorten your URL.');
@@ -31,13 +31,17 @@ export const ShortenUrlForm = ({ setNewUrlMade, setError }) => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <input
-        type="text"
-        value={inputUrl}
-        onChange={handleInputUrl}
-        placeholder="Paste a link to shorten it"
-      />
-      <button>Shorten</button>
+      <div>
+        <input
+          type="text"
+          value={inputUrl}
+          onChange={handleInputUrl}
+          placeholder="Paste a link to shorten it"
+        />
+        <button>Shorten</button>
+      </div>
     </form>
   );
 };
+
+export { ShortenUrlForm as default };

@@ -1,0 +1,53 @@
+@import '../../styles/variables';
+
+.owner-urls {
+  width: 100%;
+  max-width: 880px;
+  background: $primaryBgBoxColor;
+  margin: auto;
+  border-radius: $borderRadius;
+
+  h2 {
+    display: block;
+    padding: 2em 1em 0;
+    margin: 0;
+    color: #9599a4;
+    font-size: 1em;
+    text-align: center;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    li {
+      &:nth-child(2n+1) {
+        background: $secondaryBgBoxColor;
+      }
+
+      &:hover {
+        background: #f1f1f1;
+      }
+
+      display: flex;
+      justify-content: space-between;
+      padding: 1em 2em;
+      color: #4d4c5e;
+
+      span {
+        flex-basis: 5%;
+        text-align: right;
+      }
+
+      div {
+        flex-basis: 45%;
+      }
+
+      a {
+        color: #4d4c5e;
+      }
+    }
+  }
+}

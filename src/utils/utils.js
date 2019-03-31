@@ -1,6 +1,10 @@
-const isUrlValid = inputUrl =>
-  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm.test(
+const isUrlValid = inputUrl => {
+  const isValid = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/gm.test(
     inputUrl
   );
+  return isValid;
+};
 
-module.exports = { isUrlValid };
+const removeHttpString = url => url.replace(/^(?:http(s?)):\/\//g, '');
+
+module.exports = { isUrlValid, removeHttpString };
